@@ -1,21 +1,7 @@
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-from PIL import Image
 import pandas as pd
-import sys
 import math
-
-def test(arr, string):
-    print(string + str(arr.shape))
-    print(string + ": " + str(arr.min()) + " - " + str(arr.max()))
-    print()
-
-def test_nD(arr, string):
-    print(string + str(arr.shape))
-    for i in range(len(arr[0,0,:])):
-        print(string + " " + str(i) + ": " + str(arr[:,:,i].min()) + " - " + str(arr[:,:,i].max()))
-    print()
 
 def scale(arr):
     arr = arr.astype(float)
@@ -46,9 +32,9 @@ def shuffle_gen(n, seed):
         return shuffle
 
 def compare(color_model_1, color_model_2, color_models, comparisons):
-    channels = len(color_model_1[0,0,:])
     cm1 = color_models[color_model_1]
     cm2 = color_models[color_model_2]
+    channels = len(cm1[0,0,:])
     min_diff = 0
     for x in range(len(cm1[:,0,0])):
         for y in range(len(cm1[0,:,0])):
