@@ -3,15 +3,18 @@ import cv2
 import pandas as pd
 import math
 
+print("format,channel,min,max,range")
 def test(arr, string):
-    print(string + str(arr.shape))
+    #print(string + str(arr.shape))
     print(string + ": " + str(arr.min()) + " - " + str(arr.max()))
     print()
 
 def test_nD(arr, string):
-    print(string + str(arr.shape))
+    #print(string + str(arr.shape))
     for i in range(len(arr[0,0,:])):
-        print(string + " " + str(i) + ": " + str(arr[:,:,i].min()) + " - " + str(arr[:,:,i].max()))
+        max_val = arr[:,:,i].max()
+        min_val = arr[:,:,i].min()
+        print(string + "," + str(i) + "," + str(min_val) + "," + str(max_val) + "," + str(max_val - min_val))
     print()
 
 color_conversion_codes = {}
