@@ -6,14 +6,16 @@ import math
 print("format,channel,min,max,range")
 def test(arr, string):
     #print(string + str(arr.shape))
-    print(string + ": " + str(arr.min()) + " - " + str(arr.max()))
+    min_val = arr.min()
+    max_val = arr.max()
+    print(string + ",," + str(min_val) + "," + str(max_val) + "," + str(max_val - min_val))
     print()
 
 def test_nD(arr, string):
     #print(string + str(arr.shape))
     for i in range(len(arr[0,0,:])):
-        max_val = arr[:,:,i].max()
         min_val = arr[:,:,i].min()
+        max_val = arr[:,:,i].max()
         print(string + "," + str(i) + "," + str(min_val) + "," + str(max_val) + "," + str(max_val - min_val))
     print()
 
