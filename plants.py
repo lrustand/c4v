@@ -9,19 +9,19 @@ from sklearn.model_selection import train_test_split
 
 images = []
 labels = []
-with open("datasets/fish/final_all_index.txt") as f:
-    for line in f.readlines():
-        file = line.split("=")[3]
-        label = line.split("=")[1]
-        label_nr = int(line.split("=")[0])
-        img_type = line.split("=")[2]
-        if img_type == "insitu":
-            img = cv2.imread("datasets/fish/images/cropped/" + file + ".png")
+
+label = 0
+with open("datasets/plants/class_names.csv") as f:
+    for plant in f.readlines():
+        plant = plant.replace(' ', '_').lower().replace('\n','')
+        for file in glob.glob('datasets/plants/dataset/resized/' + plant + '/*.jpg'):
+            img = cv2.imread(file)
 
             img = cv2.resize(img, (32,32))
-            cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+            #cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
             images.append(np.asarray(img) / 255.0)
-            labels.append(label_nr)
+            labels.append(label)
+        label += 1
 
 images = np.array(images)
 labels = np.array(labels)
