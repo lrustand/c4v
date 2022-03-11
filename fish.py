@@ -7,6 +7,7 @@ import pandas as pd
 from tensorflow.keras import datasets, layers, models
 import cv2, glob
 from sklearn.model_selection import train_test_split
+import image_formatter
 
 color_space = "BGR"
 
@@ -22,17 +23,11 @@ img_types = df.iloc[:,2]
 images = []
 labels = []
 
-for row in range(len(files)):
+for row, file in enumerate(files):
     if img_types[row] == "insitu":
-        img = cv2.imread("datasets/fish/images/cropped/" + files[row] + ".png")
+        img = cv2.imread("datasets/fish/images/cropped/" + file + ".png")
 
-        img = cv2.resize(img, (32,32))
-        if color_space != "BGR":
-            img = cv2.cvtColor(img, cv2.__dict__["COLOR_BGR2" + color_space])
-        img = np.asarray(img).astype(float)
-        for channel in range(img.shape[2]):
-            img[:,:,channel] = img[:,:,channel] - df_cr.iloc[channel,0]
-            img[:,:,channel] = img[:,:,channel] / df_cr.iloc[channel,2]
+        img = image_formatter.convert_image(img, "BGR")
 
         images.append(img)
         labels.append(all_labels[row])
