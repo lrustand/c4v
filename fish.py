@@ -27,7 +27,7 @@ for row, file in enumerate(files):
     if img_types[row] == "insitu":
         img = cv2.imread("datasets/fish/images/cropped/" + file + ".png")
 
-        img = image_formatter.convert_image(img, "BGR")
+        img = image_formatter.convert_image(img, color_space)
 
         images.append(img)
         labels.append(all_labels[row])
