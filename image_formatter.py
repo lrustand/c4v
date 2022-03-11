@@ -11,7 +11,7 @@ for _, row in df.iterrows():
         color_ranges[row["format"]] = []
     color_ranges[row["format"]].append((row["min"],row["range"]))
 
-def convert_image(image, format, width=32, height=32):
+def convert_image(image, format="BGR", width=32, height=32):
     image = cv2.resize(image, (width, height))
     if format == "HLS":
         image = np.asarray(cv2.cvtColor(image, cv2.COLOR_BGR2HLS_FULL))
