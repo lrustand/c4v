@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import cv2
 
+color_spaces = ["BGR", "HSV", "HSL", "YUV", "YCrCb", "Lab", "Luv", "XYZ"]
+
 df = pd.read_csv("color_ranges.csv")
 
 color_ranges = {}
