@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 import image_formatter
 import callback
 
-def load():
+def load(width=32, height=32):
     df = pd.read_csv("datasets/fish/final_all_index.txt", sep="=", header=None)
 
     files = df.iloc[:,3]
@@ -23,7 +23,7 @@ def load():
     for row, file in enumerate(files):
         if img_types[row] == "insitu":
             img = cv2.imread("datasets/fish/images/cropped/" + file + ".png")
-
+            img = cv2.resize(img, (width, height))
             images.append(img)
             labels.append(all_labels[row])
 
