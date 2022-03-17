@@ -8,6 +8,7 @@ from tensorflow.keras import datasets, layers, models
 import cv2, glob
 from sklearn.model_selection import train_test_split
 import image_formatter
+import callback
 
 color_space = "BGR"
 
@@ -51,11 +52,13 @@ model.add(layers.Dense(labels.max()+1))
 
 model.summary()
 
+asd = callback.test()
+
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
 history = model.fit(train_images, train_labels, epochs=100,
-                    validation_data=(test_images, test_labels))
+                    validation_data=(test_images, test_labels), callbacks=[asd])
 
 

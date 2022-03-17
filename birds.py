@@ -5,7 +5,7 @@ import numpy as np
 
 from tensorflow.keras import datasets, layers, models
 import cv2, glob
-from sklearn.model_selection import train_test_split
+import callback
 
 train_images = []
 train_labels = []
@@ -48,11 +48,13 @@ model.add(layers.Dense(max(test_labels.max(), train_labels.max())+1))
 
 model.summary()
 
+asd = callback.test()
+
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
 history = model.fit(train_images, train_labels, epochs=100,
-                    validation_data=(test_images, test_labels))
+                    validation_data=(test_images, test_labels), callbacks=[asd])
 
 
