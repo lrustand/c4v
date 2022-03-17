@@ -8,12 +8,12 @@ from tensorflow.keras import datasets, layers, models
 import cv2, glob
 import callback
 
-train_images = []
-train_labels = []
-test_images = []
-test_labels = []
-
 def load(width=32, height=32):
+    train_images = []
+    train_labels = []
+    test_images = []
+    test_labels = []
+
     with open("datasets/birds/class_dict.csv") as f:
         for line in f.readlines():
             bird = line.split(",")[1]
