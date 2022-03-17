@@ -36,3 +36,8 @@ def convert_image(image, format="BGR", width=32, height=32):
         image[:,:,channel] = (image[:,:,channel] - color_ranges[format][channel][0])/color_ranges[format][channel][1]
     return image
 
+def convert_images(images, format="BGR", width=32, height=32):
+    new_images = []
+    for image in images:
+        new_images.append(convert_image(image))
+    return np.asarray(new_images)
