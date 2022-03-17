@@ -9,7 +9,7 @@ import cv2, glob
 from sklearn.model_selection import train_test_split
 import callback
 
-def load():
+def load(width=32, height=32):
     images = []
     labels = []
 
@@ -20,7 +20,7 @@ def load():
             for file in glob.glob('datasets/plants/dataset/resized/' + plant + '/*.jpg'):
                 img = cv2.imread(file)
 
-                img = cv2.resize(img, (32,32))
+                img = cv2.resize(img, (width, height))
                 images.append(np.asarray(img))
                 labels.append(label)
             label += 1
