@@ -48,12 +48,17 @@ def main():
 
         asd = callback.test()
 
-        history = fish_model.fit(train_images, train_labels, epochs=100,
+        history = fish_model.fit(train_images, train_labels, epochs=10,
                             validation_data=(test_images, test_labels), callbacks=[asd])
-        loss["fish_" + color_space] = history["loss"]
-        val_loss["fish_" + color_space] = history["val_loss"]
-        accuracy["fish_" + color_space] = history["accuracy"]
-        val_accuracy["fish_" + color_space] = history["val_accuracy"]
+        loss["fish_" + color_space] = history.history["loss"]
+        val_loss["fish_" + color_space] = history.history["val_loss"]
+        accuracy["fish_" + color_space] = history.history["accuracy"]
+        val_accuracy["fish_" + color_space] = history.history["val_accuracy"]
+
+    loss_df = pd.DataFrame(loss)
+    val_loss_df = pd.DataFrame(val_loss)
+    accuracy_df = pd.DataFrame(accuracy)
+    val_accuracy_df = pd.DataFrame(val_accuracy)
 
 
 if __name__ == "__main__":
