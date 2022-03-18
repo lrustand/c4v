@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-### Taken from tensorflow documentation
 import tensorflow as tf
 import numpy as np
 import image_formatter
 
-from tensorflow.keras import datasets, layers, models
-import cv2, glob
+from tensorflow.keras import layers, models
+import cv2
+import glob
 import callback
+
 
 def load(width=32, height=32):
     train_images = []
@@ -30,7 +31,9 @@ def load(width=32, height=32):
                 test_images.append(np.asarray(img))
                 test_labels.append(int(line.split(",")[0]))
 
-    return np.array(train_images), np.array(test_images), np.array(train_labels), np.array(test_labels)
+    return (np.array(train_images), np.array(test_images),
+            np.array(train_labels), np.array(test_labels))
+
 
 if __name__ == "__main__":
     color_space = "BGR"
@@ -39,7 +42,8 @@ if __name__ == "__main__":
     test_images = image_formatter.convert_images(test_images, color_space)
 
     model = models.Sequential()
-    model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
+    model.add(layers.Conv2D(32, (3, 3), activation='relu',
+                            input_shape=(32, 32, 3)))
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Conv2D(64, (3, 3), activation='relu'))
     model.add(layers.MaxPooling2D((2, 2)))
@@ -58,5 +62,5 @@ if __name__ == "__main__":
                   metrics=['accuracy'])
 
     history = model.fit(train_images, train_labels, epochs=100,
-                        validation_data=(test_images, test_labels), callbacks=[asd])
-
+                        validation_data=(test_images, test_labels),
+                        callbacks=[asd])
