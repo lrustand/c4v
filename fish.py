@@ -36,16 +36,18 @@ def main():
     accuracy = {}
     val_loss = {}
     val_accuracy = {}
+    (orig_train_images, orig_test_images,
+     train_labels, test_labels) = load()
+    out_size = max(train_labels.max(), test_labels.max())+1
     for color_space in image_formatter.color_spaces:
-        train_images, test_images, train_labels, test_labels = load()
-        train_images = image_formatter.convert_images(train_images, color_space)
-        test_images = image_formatter.convert_images(test_images, color_space)
-
-        out_size = max(train_labels.max(), test_labels.max())+1
-        fish_model = model.model(out_size)
+        train_images = image_formatter.convert_images(orig_train_images,
+                                                      color_space)
+        test_images = image_formatter.convert_images(orig_test_images,
+                                                     color_space)
 
         asd = callback.test()
 
+        fish_model = model.model(out_size)
         history = fish_model.fit(train_images, train_labels, epochs=10,
                                  validation_data=(test_images, test_labels),
                                  callbacks=[asd])
