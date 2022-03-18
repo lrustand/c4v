@@ -1,22 +1,20 @@
 #!/usr/bin/env python
-### Taken from tensorflow documentation
-import tensorflow as tf
 import numpy as np
 import pandas as pd
 
-from tensorflow.keras import datasets, layers, models
-import cv2, glob
+import cv2
 from sklearn.model_selection import train_test_split
 import image_formatter
 import callback
 import model
 
+
 def load(width=32, height=32):
     df = pd.read_csv("datasets/fish/final_all_index.txt", sep="=", header=None)
 
-    files = df.iloc[:,3]
-    all_labels = df.iloc[:,0]
-    img_types = df.iloc[:,2]
+    files = df.iloc[:, 3]
+    all_labels = df.iloc[:, 0]
+    img_types = df.iloc[:, 2]
 
     images = []
     labels = []
@@ -49,7 +47,8 @@ def main():
         asd = callback.test()
 
         history = fish_model.fit(train_images, train_labels, epochs=10,
-                            validation_data=(test_images, test_labels), callbacks=[asd])
+                                 validation_data=(test_images, test_labels),
+                                 callbacks=[asd])
         loss["fish_" + color_space] = history.history["loss"]
         val_loss["fish_" + color_space] = history.history["val_loss"]
         accuracy["fish_" + color_space] = history.history["accuracy"]

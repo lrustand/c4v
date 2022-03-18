@@ -11,7 +11,8 @@ color_ranges = {}
 for _, row in df.iterrows():
     if row["format"] not in color_ranges:
         color_ranges[row["format"]] = []
-    color_ranges[row["format"]].append((row["min"],row["range"]))
+    color_ranges[row["format"]].append((row["min"], row["range"]))
+
 
 def convert_image(image, format="BGR", width=32, height=32):
     if format == "HLS":
@@ -34,8 +35,9 @@ def convert_image(image, format="BGR", width=32, height=32):
         raise ValueError("Invalid format selected: " + format)
     image = image.astype(float)
     for channel in range(image.shape[2]):
-        image[:,:,channel] = (image[:,:,channel] - color_ranges[format][channel][0])/color_ranges[format][channel][1]
+        image[:, :, channel] = (image[:, :, channel] - color_ranges[format][channel][0])/color_ranges[format][channel][1]
     return image
+
 
 def convert_images(images, format="BGR", width=32, height=32):
     new_images = []
