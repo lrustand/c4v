@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-import tensorflow as tf
 import numpy as np
+import pandas as pd
 import image_formatter
 
-from tensorflow.keras import layers, models
 import cv2
 import callback
+import model
 
 
 def load(width=32, height=32):
@@ -45,32 +45,36 @@ def load(width=32, height=32):
             np.array(train_labels), np.array(test_labels))
 
 
+def main():
+    loss = {}
+    accuracy = {}
+    val_loss = {}
+    val_accuracy = {}
+    (orig_train_images, orig_test_images,
+     train_labels, test_labels) = load()
+    out_size = max(train_labels.max(), test_labels.max())+1
+    for color_space in image_formatter.color_spaces:
+        train_images = image_formatter.convert_images(orig_train_images,
+                                                      color_space)
+        test_images = image_formatter.convert_images(orig_test_images,
+                                                     color_space)
+
+        asd = callback.test()
+
+        aircrafts_model = model.model(out_size)
+        history = aircrafts_model.fit(train_images, train_labels, epochs=10,
+                                      validation_data=(test_images, test_labels),
+                                      callbacks=[asd])
+        loss["aircrafts_" + color_space] = history.history["loss"]
+        val_loss["aircrafts_" + color_space] = history.history["val_loss"]
+        accuracy["aircrafts_" + color_space] = history.history["accuracy"]
+        val_accuracy["aircrafts_" + color_space] = history.history["val_accuracy"]
+
+    loss_df = pd.DataFrame(loss)
+    val_loss_df = pd.DataFrame(val_loss)
+    accuracy_df = pd.DataFrame(accuracy)
+    val_accuracy_df = pd.DataFrame(val_accuracy)
+
+
 if __name__ == "__main__":
-    color_space = "BGR"
-    train_images, test_images, train_labels, test_labels = load()
-    train_images = image_formatter.convert_images(train_images, color_space)
-    test_images = image_formatter.convert_images(test_images, color_space)
-
-    model = models.Sequential()
-    model.add(layers.Conv2D(32, (3, 3), activation='relu',
-                            input_shape=(32, 32, 3)))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-
-    model.add(layers.Flatten())
-    model.add(layers.Dense(32, activation='relu'))
-    model.add(layers.Dense(max(train_labels.max(), test_labels.max())+1))
-
-    model.summary()
-
-    asd = callback.test()
-
-    model.compile(optimizer='adam',
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=['accuracy'])
-
-    history = model.fit(train_images, train_labels, epochs=100,
-                        validation_data=(test_images, test_labels),
-                        callbacks=[asd])
+    main()
