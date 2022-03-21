@@ -4,7 +4,6 @@ import pandas as pd
 import image_formatter
 
 import cv2
-import callback
 import model
 
 
@@ -59,12 +58,9 @@ def main():
         test_images = image_formatter.convert_images(orig_test_images,
                                                      color_space)
 
-        asd = callback.test()
-
         aircrafts_model = model.model(out_size)
         history = aircrafts_model.fit(train_images, train_labels, epochs=10,
-                                      validation_data=(test_images, test_labels),
-                                      callbacks=[asd])
+                                      validation_data=(test_images, test_labels))
         loss["aircrafts_" + color_space] = history.history["loss"]
         val_loss["aircrafts_" + color_space] = history.history["val_loss"]
         accuracy["aircrafts_" + color_space] = history.history["accuracy"]

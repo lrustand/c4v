@@ -7,7 +7,6 @@ import image_formatter
 from tensorflow.keras import layers, models
 import cv2
 import glob
-import callback
 import model
 
 def load(width=32, height=32):
@@ -49,13 +48,9 @@ def main():
                                                       color_space)
         test_images = image_formatter.convert_images(orig_test_images,
                                                      color_space)
-
-        asd = callback.test()
-
         birds_model = model.model(out_size)
         history = birds_model.fit(train_images, train_labels, epochs=10,
-                                  validation_data=(test_images, test_labels),
-                                  callbacks=[asd])
+                                  validation_data=(test_images, test_labels))
         loss["birds_" + color_space] = history.history["loss"]
         val_loss["birds_" + color_space] = history.history["val_loss"]
         accuracy["birds_" + color_space] = history.history["accuracy"]

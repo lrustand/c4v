@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import image_formatter
-import callback
 import model
 import fish
 
@@ -15,8 +14,5 @@ if __name__ == "__main__":
     out_size = max(train_labels.max(), test_labels.max())+1
     fish_model = model.model(out_size)
 
-    asd = callback.test()
-
     history = model.fit(train_images, train_labels, epochs=100,
-                        validation_data=(test_images, test_labels),
-                        callbacks=[asd])
+                        validation_data=(test_images, test_labels))

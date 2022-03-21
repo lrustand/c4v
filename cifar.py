@@ -4,7 +4,6 @@ from tensorflow.keras import datasets
 
 import pandas as pd
 import cv2
-import callback
 import model
 
 
@@ -33,12 +32,10 @@ def main():
         test_images = image_formatter.convert_images(orig_test_images,
                                                      color_space)
 
-        asd = callback.test()
-
         cifar_model = model.model(out_size)
         history = cifar_model.fit(train_images, train_labels, epochs=10,
-                                  validation_data=(test_images, test_labels),
-                                  callbacks=[asd])
+                                  validation_data=(test_images, test_labels))
+
         loss["cifar_" + color_space] = history.history["loss"]
         val_loss["cifar_" + color_space] = history.history["val_loss"]
         accuracy["cifar_" + color_space] = history.history["accuracy"]

@@ -6,7 +6,6 @@ import image_formatter
 import cv2
 import glob
 from sklearn.model_selection import train_test_split
-import callback
 import model
 
 
@@ -47,12 +46,10 @@ def main():
         test_images = image_formatter.convert_images(orig_test_images,
                                                      color_space)
 
-        asd = callback.test()
-
         plants_model = model.model(out_size)
         history = plants_model.fit(train_images, train_labels, epochs=10,
-                                   validation_data=(test_images, test_labels),
-                                   callbacks=[asd])
+                                   validation_data=(test_images, test_labels))
+
         loss["plants_" + color_space] = history.history["loss"]
         val_loss["plants_" + color_space] = history.history["val_loss"]
         accuracy["plants_" + color_space] = history.history["accuracy"]

@@ -5,7 +5,6 @@ import pandas as pd
 import cv2
 from sklearn.model_selection import train_test_split
 import image_formatter
-import callback
 import model
 
 
@@ -45,12 +44,9 @@ def main():
         test_images = image_formatter.convert_images(orig_test_images,
                                                      color_space)
 
-        asd = callback.test()
-
         fish_model = model.model(out_size)
         history = fish_model.fit(train_images, train_labels, epochs=10,
-                                 validation_data=(test_images, test_labels),
-                                 callbacks=[asd])
+                                 validation_data=(test_images, test_labels))
         loss["fish_" + color_space] = history.history["loss"]
         val_loss["fish_" + color_space] = history.history["val_loss"]
         accuracy["fish_" + color_space] = history.history["accuracy"]
