@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-import tensorflow as tf
 import numpy as np
 import pandas as pd
 import image_formatter
 
-from tensorflow.keras import layers, models
 import cv2
 import glob
 import model
+
 
 def load(width=32, height=32):
     train_images = []
