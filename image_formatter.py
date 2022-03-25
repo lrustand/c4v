@@ -14,7 +14,7 @@ for _, row in df.iterrows():
     color_ranges[row["format"]].append((row["min"], row["range"]))
 
 
-def convert_image(image, format="BGR", width=32, height=32):
+def convert_image(image, format="BGR"):
     if format == "HLS":
         image = np.asarray(cv2.cvtColor(image, cv2.COLOR_BGR2HLS_FULL))
     elif format == "HSV":
@@ -42,5 +42,5 @@ def convert_image(image, format="BGR", width=32, height=32):
 def convert_images(images, format="BGR", width=32, height=32):
     new_images = []
     for image in images:
-        new_images.append(convert_image(image))
+        new_images.append(convert_image(image, format))
     return np.asarray(new_images)
