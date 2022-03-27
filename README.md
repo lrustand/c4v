@@ -28,3 +28,5 @@ To run training on all datasets and color models run the `main.py` script, or to
 We have also included a few utility scripts used for analysing the datasets and our results. These are `dataset_averages.py`, `averages.py` and `plotter.py`.
 
 `averages.py` combines the csv files from multiple runs into a average csv, and `plotter.py` creates png plots from csv files.
+
+`dataset_averages.py` is used to compute some statistics of the datasets, namely the mean, average and variance of each color channel (for all color models).
