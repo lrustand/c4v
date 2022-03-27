@@ -12,6 +12,13 @@ Install libraries:
 pip install -r requirements.txt
 ```
 
+# Getting the datasets
+ - https://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/archives/fgvc-aircraft-2013b.tar.gz
+ - https://www.kaggle.com/sripaadsrinivasan/fish-species-image-data
+ - https://www.kaggle.com/ryanpartridge01/wild-edible-plants
+ - https://www.kaggle.com/gpiosenka/100-bird-species
+ - Cifar is downloaded through the script
+
 # Running
 To run training on all datasets and color models run the `main.py` script, or to run only one dataset use the corresponding script named after the daset, e.g. `fish.py`.
 
