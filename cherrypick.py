@@ -13,7 +13,7 @@ for val_test in ["val", "test"]:
                     path = f"runs/{val_test}/{acc_loss}/{run}/{small_normal}_{ds}.csv"
                     try:
                         new_df = pd.read_csv(path, index_col=0)
-                        new_df = new_df.loc[:, (new_df != new_df.iloc[0]).any()]
+                        new_df = new_df.loc[:, new_df.var() > 0.00001]
                         df.append(new_df)
                     except:
                         break
